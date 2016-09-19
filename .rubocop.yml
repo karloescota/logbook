@@ -1,0 +1,94 @@
+AllCops:
+  Exclude:
+    - '*.gemspec'
+    - 'Gemfile'
+    - 'bin/**/*'
+    - 'db/migrate/**/*'
+    - 'db/**'
+    - 'config/puma.rb'
+    - 'config/environments/*'
+    - 'log/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+  DisplayCopNames: true
+  TargetRubyVersion: 2.3
+
+Rails:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - '**/**'
+
+Metrics/LineLength:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/MultilineHashBraceLayout:
+  Enabled: false
+
+Style/AlignParameters:
+  Enabled: false
+
+# Style/IndentArray:
+#   Enabled: false
+
+# Style/MultilineOperationIndentation:
+#   Enabled: false
+#
+Style/NegatedIf:
+  Enabled: false
+#
+# Style/RegexpLiteral:
+#   Enabled: false
+#
+# Style/SpaceBeforeFirstArg:
+#   Enabled: false
+#
+# Style/SpaceAroundOperators:
+#   Enabled: false
+#
+# Style/SpaceInsideBrackets:
+#   Exclude:
+#     - 'config/routes.rb'
+#
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: 'comma'
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: 'comma'
+#
+# Rails/Date:
+#   Enabled: false
+#
+# Lint/AssignmentInCondition:
+#   Enabled: false
+#
+Metrics/AbcSize:
+  Enabled: false
+#
+# Style/DoubleNegation:
+#   Enabled: false
+#
+# # Offense count: 2
+# # Configuration parameters: SupportedStyles.
+# Style/RaiseArgs:
+#   EnforcedStyle: compact
+#
+# Style/SignalException:
+#   EnforcedStyle: only_fail
+#
+# Style/WordArray:
+#   Enabled: false
+#   MinSize: 5

@@ -1,0 +1,14 @@
+table
+  thead
+    tr
+      th Date
+      th In
+      th Out
+      th Total Hours
+  tbody
+    - @logs.each do |log|
+      tr
+        td = log.date
+        td = log.in
+        td = log.out
+        td = log.total_hours
