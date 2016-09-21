@@ -1,35 +1,29 @@
 class LogsController < ApplicationController
-  before_action :set_user, only: [:index]
   before_action :set_log, only: [:time_in, :time_out]
 
   def index
-    @logs = @user.logs
+    @logs = current_user.logs
   end
 
-  def show
-  end
-
-  def new
-  end
-
-  def create
+  def time_in
+    if @log.update(time_in: Time.current)
+      flash[:notice] = 'Time in updated'
+    else
+      flash[:alert] = 'Unable to update time in'
+    end
+    redirect_to root_path
   end
 
   def time_out
     if @log.update(time_out: Time.current)
-      flash.notice = 'Time out updated'
+      flash[:notice] = 'Time out updated'
     else
-      flash.alert = 'Unable to update time out'
+      flash[:alert] = 'Unable to update time out'
     end
-    redirect_to 'home/index'
+    redirect_to root_path
   end
 
   private
-
-  def set_user
-    @user = User.first
-    # @user = current_user
-  end
 
   def set_log
     @log = Log.find(params[:id])
