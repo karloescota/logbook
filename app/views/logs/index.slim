@@ -1,14 +1,13 @@
-table
-  thead
-    tr
-      th Date
-      th In
-      th Out
-      th Total Hours
-  tbody
-    - @logs.each do |log|
+.container
+  table.ui.celled.striped
+    thead
       tr
-        td = log.date
-        td = log.in
-        td = log.out
-        td = log.total_hours
+        th Date
+        th In
+        th Out
+    tbody
+      - @logs.each do |log|
+        tr
+          td = log.time_in.to_date
+          td = log.time_in
+          td = log.time_out

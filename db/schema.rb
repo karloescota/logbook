@@ -17,12 +17,10 @@ ActiveRecord::Schema.define(version: 20160919062029) do
 
   create_table "logs", force: :cascade do |t|
     t.integer  "user_id"
-    t.time     "in"
-    t.time     "out"
-    t.date     "date"
-    t.time     "total_hours"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "time_in"
+    t.datetime "time_out"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_logs_on_user_id", using: :btree
   end
 

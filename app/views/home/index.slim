@@ -1,0 +1,12 @@
+.container
+  table.ui.celled.striped
+    thead
+      tr
+        th Date
+        th In
+        th Out
+    tbody
+      tr
+        td = @log.time_in.to_date
+        td = @log.time_in
+        td = @log.time_out

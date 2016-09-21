@@ -10,6 +10,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'slim'
+gem 'semantic-ui-sass'
+gem 'html2slim'
 
 group :development, :test do
   gem 'byebug', platform: :mri
