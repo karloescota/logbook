@@ -17,10 +17,11 @@ class LogsController < ApplicationController
 
   def time_out
     if @log.update(time_out: Time.current)
-      render 'home/index'
+      flash.notice = 'Time out updated'
     else
-      redirect to: 'home/index'
+      flash.alert = 'Unable to update time out'
     end
+    redirect_to 'home/index'
   end
 
   private

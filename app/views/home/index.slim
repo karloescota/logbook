@@ -1,3 +1,8 @@
+- if flash[:notice]
+  = flash.notice
+- elsif flash[:alert]
+  = flash.alert
+
 .container
   = link_to 'Logs', logs_path
 .container
