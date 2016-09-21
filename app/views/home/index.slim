@@ -16,6 +16,6 @@
         td = @log.total_time
 
 - if @log.time_in
-  = link_to 'Time out', time_out_log_path(@log.id)
+  = link_to 'Time out', time_out_log_path(@log.id), method: :post
 - else
-  = link_to 'Time in', time_in_log_path(@log.id)
+  = link_to 'Time in', time_in_log_path(@log.id), method: :post

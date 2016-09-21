@@ -1,5 +1,6 @@
 class LogsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: [:index]
+  before_action :set_log, only: [:time_in, :time_out]
 
   def index
     @logs = @user.logs
@@ -15,6 +16,11 @@ class LogsController < ApplicationController
   end
 
   def time_out
+    if @log.update(time_out: Time.current)
+      render 'home/index'
+    else
+      redirect to: 'home/index'
+    end
   end
 
   private
@@ -22,5 +28,9 @@ class LogsController < ApplicationController
   def set_user
     @user = User.first
     # @user = current_user
+  end
+
+  def set_log
+    @log = Log.find(params[:id])
   end
 end
