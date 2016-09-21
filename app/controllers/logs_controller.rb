@@ -14,6 +14,9 @@ class LogsController < ApplicationController
   def create
   end
 
+  def time_out
+  end
+
   private
 
   def set_user

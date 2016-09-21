@@ -1,4 +1,6 @@
 .container
+  = link_to 'Logs', logs_path
+.container
   table.ui.celled.striped
     thead
       tr
@@ -10,3 +12,8 @@
         td = @log.time_in.to_date
         td = @log.time_in
         td = @log.time_out
+
+- if @log.time_in
+  = link_to 'Time out', time_out_log_path(@log.id)
+- else
+  = link_to 'Time in', time_in_log_path(@log.id)
