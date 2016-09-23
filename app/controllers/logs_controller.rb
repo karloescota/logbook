@@ -5,6 +5,14 @@ class LogsController < ApplicationController
     @logs = current_user.logs
   end
 
+  def create
+    @log = Log.new(log_params)
+    if @log.save
+    else
+    end
+    redirect_to root_path
+  end
+
   def time_in
     if @log.update(time_in: Time.current)
       flash[:notice] = 'Time in updated'
@@ -27,5 +35,9 @@ class LogsController < ApplicationController
 
   def set_log
     @log = Log.find(params[:id])
+  end
+
+  def log_params
+    params.permit(:time_in, :time_out)
   end
 end

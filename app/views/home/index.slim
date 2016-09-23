@@ -5,22 +5,35 @@
 
 .container
   = link_to 'Logs', logs_path
-.container
-  table.ui.celled.striped
-    thead
-      tr
-        th Date
-        th In
-        th Out
-        th Total Time
-    tbody
-      tr
-        td = @log.time_in.to_date
-        td = @log.time_in
-        td = @log.time_out
-        td = @log.total_time
+.ui.centered.grid
+  .column
+    .ui.centered.card
+      .content
+        .right.floated.meta = Date.current.strftime('%B %-d')
+        .header = current_user.email
+      .img
+        img src="http://placehold.it/290x200"
+      .content
+        .meta
+          i.hourglass.end.icon
+          = @log.total_time
+        br
+        span.right.floated
+          .ui.blue.horizontal.label out
+          = @log.time_out&.localtime&.strftime('%H:%M')
+        .ui.green.horizontal.label in
+        = @log.time_in&.localtime&.strftime('%H:%M')
+      .extra.content
+        .ui.two.buttons
+          = link_to logs_path(time_in: Time.current), method: :post, class:"ui basic green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
+            | Time in
+          = link_to time_out_log_path(@log.id), method: :post, class:"ui basic blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
+            | Time out
 
-- if @log.time_in
-  = link_to 'Time out', time_out_log_path(@log.id), method: :post
-- else
-  = link_to 'Time in', time_in_log_path(@log.id), method: :post
+    / .ui.centered.card
+    /   .content
+    /     .meta = "#{Date.today.beginning_of_week} - #{Date.today.end_of_week - 2}"
+    /   .content
+    /     .meta
+    /       i.hourglass.end.icon
+    /       = @log.user.current_week_total_time
