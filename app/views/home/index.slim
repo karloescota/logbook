@@ -1,12 +1,13 @@
-- if flash[:notice]
-  = flash[:notice]
-- elsif flash[:alert]
-  = flash[:alert]
-
-.ui.fixed.inverted.menu
+.ui.inverted.menu
   .ui.container
     .header.item Logbook
     / = link_to 'Logbook', logs_path, class: 'item'
+- if flash[:notice]
+  .ui.success.message
+    p = flash[:notice]
+- elsif flash[:alert]
+  .ui.negative.message
+    p = flash[:alert]
 .ui.main.container
   .ui.divided.grid
     .four.wide.column
