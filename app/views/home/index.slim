@@ -2,90 +2,64 @@
   = flash[:notice]
 - elsif flash[:alert]
   = flash[:alert]
-  
-.container
-  .ui.inverted.menu
-    .item
-      = link_to 'Logs', logs_path
 
-.home-container.ui.grid
-  .four.wide.column
-    = "This week: #{current_user.current_week_total_time_view || '00:00'}"
-    br
-    = "Today: #{@log.total_time_view || '00:00'}"
-    hr
-    = link_to logs_path(time_in: Time.current), method: :post, class:"fluid ui green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
-      | Time in
-    hr
-    = link_to time_out_log_path(@log), method: :post, class:"fluid ui blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
-      | Time out
-    
-    / .meta
-    /   i.hourglass.end.icon
-    /   = @log.total_time || '00:00'
-    / .ui.centered.card.home-card
-    /   .content
-    /     .right.floated.meta = Date.current.strftime('%B %-d')
-    /     .header = current_user.email
-    /   .content
-    /     .meta
-    /       i.hourglass.end.icon
-    /       = @log.total_time || '00:00'
-    /     br
-    /     span.right.floated
-    /       .ui.blue.horizontal.label out
-    /       = @log.time_out&.localtime&.strftime('%H:%M')
-    /     .ui.green.horizontal.label in
-    /     = @log.time_in&.localtime&.strftime('%H:%M')
-    /   .extra.content
-    /     .ui.two.buttons
-    /       = link_to logs_path(time_in: Time.current), method: :post, class:"ui basic green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
-    /         | Time in
-    /       = link_to time_out_path(@log.id), method: :post, class:"ui basic blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
-    /         | Time out
-
-  .twelve.wide.column
-    .ui.feed
-      - @current_week_logs.each do |log|
-        .event
-          .label
-            = log.time_in.localtime.strftime('%a')
+.ui.fixed.inverted.menu
+  .ui.container
+    = link_to 'Logs', logs_path, class: 'item'
+.ui.main.container
+  .home-container.ui.grid
+    .four.wide.column
+      .ui.relaxed.list
+        .item
           .content
-            
-            .summary
-              - if log.time_in
+            = current_user.email
+        .item
+          .content
+            .description
+              = "#{Date.current.beginning_of_week.strftime('%b %-d')} - #{(Date.current.end_of_week - 2).strftime('%b %-d')}"
+            .header
+              i.hourglass.start.icon
+              = current_user.current_week_total_time_view || '00:00'
+        .item
+          .content
+            .description Today
+            .header
+              i.hourglass.start.icon
+              = @log.total_time_view || '00:00'
+        .item
+          .content
+            = link_to logs_path(time_in: Time.current), method: :post, class:"fluid ui green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
+              - if @log.time_in
+                = @log.time_in.localtime.strftime('%l:%M %P')
+              - else
+                | Time in
+        .item
+          .content
+            = link_to time_out_log_path(@log), method: :post, class:"fluid ui blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
+              - if @log.time_out
+                = @log.time_out.localtime.strftime('%l:%M %P')
+              - else
+                | Time out
+
+    .twelve.wide.column
+      .ui.feed
+        - @current_week_logs.each do |log|
+          .event
+            .label
+              = log.time_in.localtime.strftime('%a')
+            .content
+              .summary
                 .ui.green.basic.label
                   | in
                   .detail
-                    = log.time_in.localtime&.strftime('%H:%M')
-              - if log.time_out
-                .ui.blue.basic.label
-                  | out
-                  .detail
-                    = log.time_out.localtime.strftime('%H:%M')
-              .date
-                = log.time_in.strftime('%b %-d')
-            .meta
-              i.hourglass.start.icon
-              = log.total_time_view
-    
-      / .ui.centered.card.home-card
-      /   .content
-      /     .right.floated.meta = Date.current.strftime('%B %-d')
-      /     .header = current_user.email
-      /   .content
-      /     .meta
-      /       i.hourglass.end.icon
-      /       = @log.total_time || '00:00'
-      /     br
-      /     span.right.floated
-      /       .ui.blue.horizontal.label out
-      /       = @log.time_out&.localtime&.strftime('%H:%M')
-      /     .ui.green.horizontal.label in
-      /     = @log.time_in&.localtime&.strftime('%H:%M')
-      /   .extra.content
-      /     .ui.two.buttons
-      /       = link_to logs_path(time_in: Time.current), method: :post, class:"ui basic green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
-      /         | Time in
-      /       = link_to time_out_path(@log.id), method: :post, class:"ui basic blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
-      /         | Time out
+                    = log.time_in.localtime&.strftime('%l:%M %P')
+                - if log.time_out
+                  .ui.blue.basic.label
+                    | out
+                    .detail
+                      = log.time_out.localtime.strftime('%l:%M %P')
+                .date
+                  = log.time_in.strftime('%b %-d')
+              .meta
+                i.hourglass.start.icon
+                = log.total_time_view
