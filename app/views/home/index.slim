@@ -7,7 +7,7 @@
   .ui.container
     = link_to 'Logs', logs_path, class: 'item'
 .ui.main.container
-  .home-container.ui.grid
+  .ui.divided.grid
     .four.wide.column
       .ui.relaxed.list
         .item
@@ -40,7 +40,6 @@
                 = @log.time_out.localtime.strftime('%l:%M %P')
               - else
                 | Time out
-
     .twelve.wide.column
       .ui.feed
         - @current_week_logs.each do |log|
