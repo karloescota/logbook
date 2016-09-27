@@ -1,26 +1,27 @@
 class LogsController < ApplicationController
-  before_action :set_log, only: [:time_in, :time_out]
+  before_action :set_log, only: [:time_out]
 
   def index
     @logs = current_user.logs
   end
 
   def create
-    @log = Log.new(log_params)
+    @log = current_user.logs.build(log_params)
     if @log.save
     else
     end
     redirect_to root_path
   end
 
-  def time_in
-    if @log.update(time_in: Time.current)
-      flash[:notice] = 'Time in updated'
-    else
-      flash[:alert] = 'Unable to update time in'
-    end
-    redirect_to root_path
-  end
+  # def time_in
+  #   @log = Log.new(time_in: Time.current)
+  #   if @log.save
+  #     flash[:notice] = 'Time in updated'
+  #   else
+  #     flash[:alert] = @log.errors.full_messages.to_sentence
+  #   end
+  #   redirect_to root_path
+  # end
 
   def time_out
     if @log.update(time_out: Time.current)

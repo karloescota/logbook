@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   devise_for :users
   resources :logs do
     member do
-      post :time_in
       post :time_out
     end
   end

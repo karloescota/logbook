@@ -5,7 +5,10 @@ class Log < ApplicationRecord
 
   def total_time
     return unless time_out
-    diff = time_out - time_in
-    Time.at(diff).utc.strftime("%H:%M")
+    time_out - time_in
+  end
+
+  def total_time_view
+    Time.at(total_time).utc.strftime('%H:%M')
   end
 end
