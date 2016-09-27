@@ -5,7 +5,8 @@
 
 .ui.fixed.inverted.menu
   .ui.container
-    = link_to 'Logs', logs_path, class: 'item'
+    .header.item Logbook
+    / = link_to 'Logbook', logs_path, class: 'item'
 .ui.main.container
   .ui.divided.grid
     .four.wide.column
@@ -22,7 +23,8 @@
               = current_user.current_week_total_time_view || '00:00'
         .item
           .content
-            .description Today
+            .description
+              = Date.current.strftime('%b %-d')
             .header
               i.hourglass.start.icon
               = @log.total_time_view || '00:00'
@@ -45,7 +47,8 @@
         - @current_week_logs.each do |log|
           .event
             .label
-              = log.time_in.localtime.strftime('%a')
+              .ui.basic.grey.circular.label
+                = log.time_in.localtime.strftime('%u')
             .content
               .summary
                 .ui.green.basic.label
