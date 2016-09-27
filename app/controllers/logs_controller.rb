@@ -1,8 +1,22 @@
 class LogsController < ApplicationController
-  before_action :set_log, only: [:time_out]
+  before_action :set_log, only: [:edit, :update, :time_out]
 
   def index
     @logs = current_user.logs
+  end
+
+  def edit
+  end
+
+  def update
+    time_in = DateTime.strptime("#{params[:log][:time_in]} +8", '%H:%M %m/%d/%y %z')
+    time_out = DateTime.strptime("#{params[:log][:time_out]} +8", '%H:%M %m/%d/%y %z') if params[:log][:time_out].present?
+    if @log.update(time_in: time_in, time_out: time_out)
+      flash[:notice] = 'Log updated'
+    else
+      flash[:alert] = @log.errors.full_messages.to_sentence
+    end
+    redirect_to root_path
   end
 
   def create

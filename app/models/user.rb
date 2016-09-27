@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def current_week_total_time
-    current_week_logs.sum(&:total_time)
+    logs.where("date(time_in) >= ? AND date(time_in) <= ? ", Date.current.beginning_of_week, (Date.current.end_of_week - 2)).where.not(time_out: nil).sum(&:total_time)
   end
 
   def current_week_total_time_view

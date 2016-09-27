@@ -9,6 +9,6 @@ class Log < ApplicationRecord
   end
 
   def total_time_view
-    Time.at(total_time).utc.strftime('%H:%M')
+    Time.at(total_time).utc.strftime('%H:%M') if total_time
   end
 end

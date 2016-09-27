@@ -37,11 +37,12 @@
                 | Time in
         .item
           .content
-            = link_to time_out_log_path(@log), method: :post, class:"fluid ui blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
-              - if @log.time_out
-                = @log.time_out.localtime.strftime('%l:%M %P')
-              - else
-                | Time out
+            - if @log.persisted?
+              = link_to time_out_log_path(@log), method: :post, class:"fluid ui blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
+                - if @log.time_out
+                  = @log.time_out.localtime.strftime('%l:%M %P')
+                - else
+                  | Time out
     .twelve.wide.column
       .ui.feed
         - @current_week_logs.each do |log|
@@ -64,4 +65,6 @@
                   = log.time_in.strftime('%b %-d')
               .meta
                 i.hourglass.start.icon
-                = log.total_time_view
+                = log.total_time_view || '00:00'
+                = link_to edit_log_path(log)
+                  i.edit.icon
