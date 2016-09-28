@@ -1,4 +1,4 @@
-.ui.fixed.inverted.menu
+.ui.inverted.menu
   .ui.container
     .header.item Logbook
 .ui.main.container
@@ -14,4 +14,5 @@
         = f.text_field :time_out, autofocus: true, placeholder: "Time out", value: f.object.time_out&.localtime&.strftime('%H:%M %m/%d/%y')
     br
     .actions
-      = f.submit "Sign up", class: "ui teal submit button"
+      = f.submit "OK", class: "ui teal submit button"
+      = link_to 'Cancel', root_path, class: 'ui button'
