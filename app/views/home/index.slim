@@ -1,34 +1,35 @@
 .ui.inverted.menu
   .ui.container
     .header.item Logbook
-    / = link_to 'Logbook', logs_path, class: 'item'
 - if flash[:notice]
   .ui.success.message
     p = flash[:notice]
 - elsif flash[:alert]
   .ui.negative.message
     p = flash[:alert]
+
 .ui.main.container
   .ui.divided.grid
     .four.wide.column
       .ui.relaxed.list
         .item
           .content
-            = current_user.email
+            = current_user.email.split('@').first
         .item
           .content
             .description
               = "#{Date.current.beginning_of_week.strftime('%b %-d')} - #{(Date.current.end_of_week - 2).strftime('%b %-d')}"
             .header
-              i.hourglass.start.icon
-              = current_user.current_week_total_time_view || '00:00'
+              .ui.small.indicating.progress data-value=@weekly_progress_value data-total=162000
+                .bar
+                .label = current_user.current_week_total_time_view
         .item
           .content
-            .description
-              = Date.current.strftime('%b %-d')
+            .description Today
             .header
-              i.hourglass.start.icon
-              = @log.total_time_view || '00:00'
+              .ui.small.indicating.progress data-value=@daily_progress_value data-total=32400
+                .bar
+                .label = @log.total_time_view
         .item
           .content
             = link_to logs_path(time_in: Time.current), method: :post, class:"fluid ui green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
@@ -69,3 +70,11 @@
                 = log.total_time_view || '00:00'
                 = link_to edit_log_path(log)
                   i.edit.icon
+javascript:
+  $('.ui.progress').progress({
+    label: 'ratio',
+    limitValues: false,
+    text: {
+      ratio: "#{current_user.current_week_total_time_view}"
+    }
+  });
