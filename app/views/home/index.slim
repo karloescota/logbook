@@ -4,6 +4,15 @@
     .item
       = link_to new_log_path
         i.plus.icon
+    .ui.right.inverted.menu
+      - if user_signed_in?
+        .item
+          = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'ui black button'
+      - else
+        .item
+          = link_to 'Login', new_user_session_path, class: 'ui black button'
+        .item
+          = link_to 'Sign up', new_user_registration_path, class: 'ui black button'
 - if flash[:notice]
   .ui.success.message
     p = flash[:notice]
@@ -84,15 +93,15 @@ javascript:
     }
   });
 
-  let timeoutText = $('.timeout.button').text();
-  let timeIn = "#{@log.time_in}"
+  var timeoutText = $('.timeout.button').text();
+  var timeIn = "#{@log.time_in}"
 
-  let daily = $('.ui.daily.progress');
-  let dailyLabel = $('.daily.label');
+  var daily = $('.ui.daily.progress');
+  var dailyLabel = $('.daily.label');
 
-  let dailyProgress = daily.data('value');
-  let progressPercentage = 0;
-  let dailyRemaining = 32400 - dailyProgress;
+  var dailyProgress = daily.data('value');
+  var progressPercentage = 0;
+  var dailyRemaining = 32400 - dailyProgress;
 
   if (timeIn && timeoutText === 'Time out') {
     updateDailyTime();
