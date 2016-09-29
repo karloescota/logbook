@@ -23,16 +23,16 @@
             .description
               = "#{Date.current.beginning_of_week.strftime('%b %-d')} - #{(Date.current.end_of_week - 2).strftime('%b %-d')}"
             .header
-              .ui.small.indicating.progress data-value=@weekly_progress_value data-total=162000
+              .ui.small.indicating.weekly.progress data-value=@weekly_progress_value data-total=162000
                 .bar
                 .label = current_user.current_week_total_time_view
         .item
           .content
             .description Today
             .header
-              .ui.small.indicating.progress data-value=@daily_progress_value data-total=32400
+              .ui.small.indicating.daily.progress data-value=@daily_progress_value data-total=32400
                 .bar
-                .label = @log.total_time_view
+                #daily-label.label = @log.total_time_view
         .item
           .content
             = link_to time_in_logs_path, method: :post, class:"fluid ui green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
@@ -43,7 +43,7 @@
         .item
           .content
             - if @log.persisted?
-              = link_to time_out_log_path(@log), method: :post, class:"fluid ui blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
+              = link_to time_out_log_path(@log), method: :post, class:"timeout fluid ui blue button #{'disabled' unless @log.time_in} #{'basic' unless @log.time_in}"
                 - if @log.time_out
                   = @log.time_out.localtime.strftime('%l:%M %P')
                 - else
@@ -83,3 +83,47 @@ javascript:
       ratio: "#{current_user.current_week_total_time_view}"
     }
   });
+
+  let timeoutText = $('.timeout.button').text();
+  let timeIn = "#{@log.time_in}"
+
+  let daily = $('.ui.daily.progress');
+  let dailyLabel = $('.daily.label');
+
+  let dailyProgress = daily.data('value');
+  let progressPercentage = 0;
+  let dailyRemaining = 32400 - dailyProgress;
+
+  if (timeIn && timeoutText === 'Time out') {
+    updateDailyTime();
+    updatePercentage();
+    const interval = setInterval(incrementDaily, 1000 * 60);
+  }
+
+  function incrementDaily() {
+    updatePercentage();
+
+    if (progressPercentage >= 100) {
+      clearInterval(interval);
+    }
+
+    updateDailyTime();
+  }
+
+  function updatePercentage() {
+    let timeDiff = (new Date() - new Date(timeIn)) / 1000;
+    let progressPercentage = timeDiff / 32400 * 100;
+    daily.progress('set percent', (timeDiff / 32400 * 100));
+  }
+
+  function updateDailyTime() {
+    let timeDiff = (new Date() - new Date(timeIn)) / 1000;
+    let hours = parseInt(timeDiff / 3600);
+    let minutes = parseInt(timeDiff / 60 % 60);    
+
+    document.getElementById("daily-label").innerHTML = pad(hours) + ':' + pad(minutes);
+  }
+
+  function pad(n) {
+    return (n < 10) ? ("0" + n) : n;
+  }
