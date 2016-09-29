@@ -1,6 +1,9 @@
 .ui.inverted.menu
   .ui.container
     .header.item Logbook
+    .item
+      = link_to new_log_path
+        i.plus.icon
 - if flash[:notice]
   .ui.success.message
     p = flash[:notice]
@@ -32,7 +35,7 @@
                 .label = @log.total_time_view
         .item
           .content
-            = link_to logs_path(time_in: Time.current), method: :post, class:"fluid ui green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
+            = link_to time_in_logs_path, method: :post, class:"fluid ui green button #{'disabled' if @log.time_in} #{'basic' unless @log.time_out}"
               - if @log.time_in
                 = @log.time_in.localtime.strftime('%l:%M %P')
               - else
@@ -70,6 +73,8 @@
                 = log.total_time_view || '00:00'
                 = link_to edit_log_path(log)
                   i.edit.icon
+                = link_to log_path(log), method: :delete, data: { confirm: 'Sure?' }
+                  i.remove.icon
 javascript:
   $('.ui.progress').progress({
     label: 'ratio',

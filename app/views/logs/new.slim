@@ -1,0 +1,18 @@
+.ui.inverted.menu
+  .ui.container
+    .header.item Logbook
+.ui.main.container
+  = form_for @log, html: { class: 'ui form' } do |f|
+    .field
+      .ui.left.icon.input
+        i.laptop.icon
+        = f.text_field :time_in, autofocus: true, placeholder: "Time in HH:MM mm/dd/yyyy"
+    br
+    .field
+      .ui.left.icon.input
+        i.laptop.icon
+        = f.text_field :time_out, autofocus: true, placeholder: "Time out HH:MM mm/dd/yyyy"
+    br
+    .actions
+      = f.submit "OK", class: "ui teal submit button"
+      = link_to 'Cancel', root_path, class: 'ui button'
